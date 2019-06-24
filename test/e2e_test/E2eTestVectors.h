@@ -118,10 +118,9 @@ typedef struct EncTestSetting {
  *
  * @return     A std::vector of test vectors.
  */
-static inline const std::vector<EncTestSetting> generate_vector_from_config(
+static inline const std::vector<TestVideoVector> generate_vector_from_config(
     const char* config_file) {
     std::vector<TestVideoVector> values;
-    std::vector<EncTestSetting> enc_test_cases;
     std::string cfg_fn =
         svt_av1_video_source::VideoFileSource::get_vector_dir();
     cfg_fn = cfg_fn + '/' + config_file;
@@ -179,6 +178,22 @@ static inline const std::vector<EncTestSetting> generate_vector_from_config(
         printf("test configuration file can not be opended: %s!\n",
                cfg_fn.c_str());
     }
+    return values;
+}
+
+/**
+ * @brief      Generate test settings from config file.
+ *
+ * @param[in]  config_file  The configuration file name. It will read tihs file
+ * from path which defined by system envrionment SVT_AV1_TEST_VECTOR_PATH.
+ *
+ * @return     A std::vector of test settings.
+ */
+static inline const std::vector<EncTestSetting> generate_setting_from_config(
+    const char* config_file) {
+    std::vector<EncTestSetting> enc_test_cases;
+    std::vector<TestVideoVector> values =
+        generate_vector_from_config(config_file);
     enc_test_cases.push_back(EncTestSetting{
         "default_setting", std::map<std::string, std::string>(), values});
     return enc_test_cases;

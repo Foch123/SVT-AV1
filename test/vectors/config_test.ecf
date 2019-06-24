@@ -1,0 +1,1 @@
+name=configurable_test;description=this is a sample of configurable test;config_line=-enc-mode 7 -q 30;test_vector=conformance_test.cfg
