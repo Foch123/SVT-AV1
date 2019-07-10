@@ -18,6 +18,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 /** PerformanceCollect is a class designed to collect time in test for a report
 of performance evaluation*/
@@ -52,7 +53,7 @@ class PerformanceCollect {
             std::string print =
                 "[" + name + "] cost: " + std::to_string(count_ticks) + "ms, ";
             print += "usage: " +
-                     std::to_string(count_ticks * 100 / total_ticks) + "%\n";
+                     std::to_string(count_ticks * 100 / total_ticks) + "%";
             return print;
         }
     } * CollectHandle;
@@ -71,7 +72,7 @@ class PerformanceCollect {
         while (collect_vec_.size()) {
             CollectHandle p = collect_vec_.back();
             collect_vec_.pop_back();
-            printf("%s%s", test_name_.c_str(), p->to_string().c_str());
+            std::cout << test_name_ << p->to_string() << std::endl;
         }
     }
     /** Start counting time of specificate test item
@@ -96,7 +97,8 @@ class PerformanceCollect {
         }
         if (collector) {
             if (collector->last_start_tick) {
-                printf("last counting is not stopped, skip this attampt!!\n");
+                std::cout << "last counting is not stopped, skip this attampt!!"
+                          << std::endl;
             } else
                 collector->last_start_tick = get_time_tick();
         }

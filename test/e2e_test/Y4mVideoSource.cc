@@ -108,13 +108,9 @@ EbErrorType Y4MVideoSource::parse_file_info() {
 
     // Calculate frame count
     file_frames_ = (file_length_ - header_length_) / frame_length_;
-
-    printf("File len:%d; frame w:%d, h:%d, frame len:%d; frame count:%d\r\n",
-           file_length_,
-           width_,
-           height_,
-           frame_length_,
-           file_frames_);
+    std::cout << "File len : " << file_length_ << "; frame w: " << width_
+              << "h: " << height_ << "; frame len:" << frame_length_
+              << "; frame count: " << file_frames_ << std::endl;
 
     return EB_ErrorNone;
 }
@@ -122,23 +118,23 @@ EbErrorType Y4MVideoSource::parse_file_info() {
 uint32_t Y4MVideoSource::read_input_frame() {
     char frame_header[6] = {0};
     if (file_handle_ == nullptr) {
-        printf("Error file handle\r\n");
+        std::cout << "Error file handle" << std::endl;
         return 0;
     }
 
     if (feof(file_handle_) != 0) {
-        printf("Reach file end\r\n");
+        std::cout << "Reach file end" << std::endl;
         return 0;
     }
 
     if (6 != fread(frame_header, 1, 6, file_handle_)) {
-        printf("can not found frame header\r\n");
+        std::cout << "can not found frame header" << std::endl;
         return 0;
     }
 
     // Check frame header
     if (!((strncmp("FRAME", frame_header, 5) == 0) && frame_header[5] == 0xA)) {
-        printf("Read frame error\n");
+        std::cout << "Read frame error" << std::endl;
         return 0;
     }
     return VideoFileSource::read_input_frame();
@@ -146,7 +142,7 @@ uint32_t Y4MVideoSource::read_input_frame() {
 
 EbErrorType Y4MVideoSource::seek_to_frame(const uint32_t index) {
     if (file_handle_ == nullptr) {
-        printf("Error file handle\r\n");
+        std::cout << "Error file handle" << std::endl;
         return EB_ErrorInsufficientResources;
     }
     fseek(file_handle_, index * frame_length_ + header_length_, SEEK_SET);

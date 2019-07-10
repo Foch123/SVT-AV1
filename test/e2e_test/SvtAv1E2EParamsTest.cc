@@ -145,7 +145,8 @@ class CodingOptionTest : public SvtAv1E2ETestFramework {
         // iterate the mappings and update config
         for (auto &x : enc_setting.setting) {
             set_enc_config(enc_config_, x.first.c_str(), x.second.c_str());
-            printf("EncSetting: %s = %s\n", x.first.c_str(), x.second.c_str());
+            std::cout << "EncSetting:" << x.first << " = " << x.second
+                      << std::endl;
         }
     }
 
@@ -277,7 +278,7 @@ class CodingOptionTest : public SvtAv1E2ETestFramework {
 };
 
 TEST_P(CodingOptionTest, CheckEncOptionsUsingBitstream) {
-    run_death_test();
+    run_test();
 }
 
 INSTANTIATE_TEST_CASE_P(SvtAv1, CodingOptionTest,

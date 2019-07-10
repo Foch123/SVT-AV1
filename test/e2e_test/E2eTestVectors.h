@@ -47,12 +47,14 @@ typedef std::tuple<std::string,      /**< file name */
                    uint32_t> /**< frames to test, (0) means full-frames*/
     TestVideoVector;
 const std::vector<TestVideoVector> default_test_vectors = {
-    std::make_tuple("park_joy_90p_8_420.y4m", Y4M_VIDEO_FILE, IMG_FMT_420, 160,
-                    90, 8, 0, 0, 0),
-    std::make_tuple("park_joy_90p_10_420.y4m", Y4M_VIDEO_FILE,
-                    IMG_FMT_420P10_PACKED, 160, 90, 10, 0, 0, 0),
-    std::make_tuple("kirland_640_480_30.yuv", YUV_VIDEO_FILE, IMG_FMT_420, 640,
-                    480, 8, 0, 0, 60),
+    // std::make_tuple("park_joy_90p_8_420.y4m", Y4M_VIDEO_FILE, IMG_FMT_420,
+    // 160,
+    //                90, 8, 0, 0, 0),
+    // std::make_tuple("park_joy_90p_10_420.y4m", Y4M_VIDEO_FILE,
+    //                IMG_FMT_420P10_PACKED, 160, 90, 10, 0, 0, 0),
+    // std::make_tuple("kirland_640_480_30.yuv", YUV_VIDEO_FILE, IMG_FMT_420,
+    // 640,
+    //                480, 8, 0, 0, 60),
     std::make_tuple("niklas_640_480_30.yuv", YUV_VIDEO_FILE, IMG_FMT_420, 640,
                     480, 8, 0, 0, 60),
 };
@@ -176,8 +178,8 @@ static inline const std::vector<EncTestSetting> generate_vector_from_config(
         }
         fclose(file_handle);
     } else {
-        printf("test configuration file can not be opended: %s!\n",
-               cfg_fn.c_str());
+        std::cout << "test configuration file can not be opended: " << cfg_fn
+                  << std::endl;
     }
     enc_test_cases.push_back(EncTestSetting{
         "default_setting", std::map<std::string, std::string>(), values});

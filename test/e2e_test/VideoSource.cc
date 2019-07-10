@@ -213,12 +213,12 @@ std::string VideoFileSource::get_vector_dir() {
 uint32_t VideoFileSource::read_input_frame() {
     uint32_t filled_len = 0;
     if (file_handle_ == nullptr) {
-        printf("Error file handle\r\n");
+        std::cout << "Error file handle" << std::endl;
         return 0;
     }
 
     if (feof(file_handle_) != 0) {
-        printf("Reach file end\r\n");
+        std::cout << "Reach file end" << std::endl;
         return 0;
     }
     int width_downsize = 1;
@@ -455,14 +455,13 @@ EbErrorType VideoFileSource::open_source(const uint32_t init_pos,
 
     FOPEN(file_handle_, full_path.c_str(), "rb");
     if (file_handle_ == nullptr) {
-        printf(">>> Open video source %s failed!\r\n", full_path.c_str());
-        printf(
-            "    You can use CMake generated build target TestVectors to get "
-            "correct test vectors before run this test.\r\n");
-        printf(
-            "    For unix like system, run 'make TestVectors', or build "
-            "TestVectors project on "
-            "VisualStudio.\r\n");
+        std::cout << ">>> Open video source failed!" << full_path << std::endl;
+        std::cout << "    You can use CMake generated build target TestVectors "
+                     "to get correct test vectors before run this test."
+                  << std::endl;
+        std::cout << "    For unix like system, run 'make TestVectors', or "
+                     "build TestVectors project on VisualStudio."
+                  << std::endl;
         return EB_ErrorBadParameter;
     }
 
@@ -484,11 +483,9 @@ EbErrorType VideoFileSource::open_source(const uint32_t init_pos,
         return EB_ErrorInsufficientResources;
     }
     if (file_frames_ <= init_pos || init_pos + frame_count >= file_frames_) {
-        printf(
-            "setup of initial position(%u) and output frame count(%u) is out "
-            "of bound!\n",
-            init_pos,
-            frame_count);
+        std::cout << "setup of initial position(" << init_pos
+                  << ") and output frame count(" << frame_count
+                  << ") is out of bound!" << std::endl;
         fclose(file_handle_);
         file_handle_ = nullptr;
         return EB_ErrorInsufficientResources;

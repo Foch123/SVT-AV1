@@ -57,7 +57,7 @@ class CrashDeathTest : public SvtAv1E2ETestFramework {
 };
 
 TEST_P(CrashDeathTest, NotCrashTest) {
-    run_death_test();
+    run_test();
 }
 
 INSTANTIATE_TEST_CASE_P(SvtAv1, CrashDeathTest,
@@ -90,7 +90,7 @@ class ConformanceDeathTest : public SvtAv1E2ETestFramework {
 };
 
 TEST_P(ConformanceDeathTest, DefaultSettingTest) {
-    run_death_test();
+    run_test();
 }
 
 /* clang-format off */

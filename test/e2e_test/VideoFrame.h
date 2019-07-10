@@ -18,6 +18,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <assert.h>
+#include <iostream>
 
 #define INVALID_QP (0xFF)
 
@@ -109,7 +110,7 @@ typedef struct VideoFrame : public VideoFrameParam {
             calculate_strides(param, stride);
             buf_size = max_size;
         } else
-            printf("video frame buffer is out of memory!!\n");
+            std::cout << "video frame buffer is out of memory" << std::endl;
     }
     VideoFrame(const VideoFrame &origin) {
         // copy from origin
@@ -131,7 +132,7 @@ typedef struct VideoFrame : public VideoFrameParam {
             }
             buf_size = max_size;
         } else
-            printf("video frame buffer is out of memory!!\n");
+            std::cout << "video frame buffer is out of memory" << std::endl;
     }
     ~VideoFrame() {
         if (buf_size) {

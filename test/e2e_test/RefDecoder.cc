@@ -48,7 +48,10 @@ static int get_max_intra_period_length(std::vector<int>& frame_type_vec) {
             break;
         case INTER_FRAME:
         case S_FRAME: period++; break;
-        default: printf("found unknown frame type: %d\n", frame_type); break;
+        default:
+            std::cout << "found unknown frame type: %d" << frame_type
+                      << std::endl;
+            break;
         }
     }
     // if no intra, it should return -1
@@ -232,7 +235,7 @@ void RefDecoder::inspect_cb(void* pbi, void* data) {
     }
     insp_frame_data* inspect_data = (insp_frame_data*)pThis->insp_frame_data_;
     if (!pThis->insp_frame_data_) {
-        printf("inspect frame data structure is not ready!\n");
+        std::cout << "inspect frame data structure is not ready!" << std::endl;
         return;
     }
 
@@ -319,9 +322,9 @@ RefDecoder::RefDecoder(RefDecoder::RefDecoderErr& ret, bool enable_analyzer) {
     aom_codec_ctx_t* codec_ = (aom_codec_ctx_t*)codec_handle_;
     aom_codec_err_t err =
         aom_codec_dec_init(codec_, aom_codec_av1_dx(), nullptr, 0);
-    if (err != AOM_CODEC_OK) {
-        printf("can not create refernece decoder!!\n");
-    }
+    if (err != AOM_CODEC_OK)
+        std::cout << "can not create refernece decoder!!" << std::endl;
+
     ret = (RefDecoderErr)(0 - err);
 
     // setup parsers including sequence header parser and inspection
@@ -329,7 +332,7 @@ RefDecoder::RefDecoder(RefDecoder::RefDecoderErr& ret, bool enable_analyzer) {
     if (enable_analyzer) {
         parser_ = new SequenceHeaderParser();
         if (parser_ == nullptr)
-            printf("parser create failed!\n");
+            std::cout << "parser create failed!" << std::endl;
 
         // setup inspection callback
         aom_inspect_init ii;
@@ -338,7 +341,7 @@ RefDecoder::RefDecoder(RefDecoder::RefDecoderErr& ret, bool enable_analyzer) {
         err = aom_codec_control(
             (aom_codec_ctx_t*)codec_handle_, AV1_SET_INSPECTION_CALLBACK, &ii);
         if (err != AOM_CODEC_OK)
-            printf("inspection watch create failed!!\n");
+            std::cout << "inspection watch create failed!!" << std::endl;
     }
 }
 
@@ -369,7 +372,7 @@ RefDecoder::RefDecoderErr RefDecoder::decode(const uint8_t* data,
     aom_codec_ctx_t* codec_ = (aom_codec_ctx_t*)codec_handle_;
     aom_codec_err_t err = aom_codec_decode(codec_, data, size, nullptr);
     if (err != AOM_CODEC_OK) {
-        printf("decoder decode error: %d!", err);
+        std::cout << "ecoder decode error: " << err << std::endl;
         return (RefDecoderErr)(0 - err);
     }
     enc_bytes_ += size;
