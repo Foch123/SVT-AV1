@@ -159,7 +159,11 @@ static const std::vector<EncTestSetting> default_enc_settings = {
     {"TileTest3", {{"TileCol", "1"}, {"TileRow", "1"}}, default_test_vectors},
 
     {"SpeedControlTest1", {{"SpeedControlFlag", "1"}}, default_test_vectors},
+
+    // test by using a dummy source of color bar
+    {"DummySrcTest1", {{"EncoderMode", "8"}}, dummy_test_vectors},
 };
+
 /* clang-format on */
 INSTANTIATE_TEST_CASE_P(SvtAv1, ConformanceDeathTest,
                         ::testing::ValuesIn(default_enc_settings),
