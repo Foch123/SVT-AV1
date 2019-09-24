@@ -345,7 +345,7 @@ void asmSetConvolveAsmTable(void);
 void asmSetConvolveHbdAsmTable(void);
 void init_intra_dc_predictors_c_internal(void);
 void init_intra_predictors_internal(void);
-void av1_init_me_luts(void);
+void eb_av1_init_me_luts(void);
 
 void SwitchToRealTime(){
 #if defined(__linux__) || defined(__APPLE__)
@@ -438,10 +438,10 @@ EbErrorType load_default_buffer_configuration_settings(
 #if defined(_WIN32) || defined(__linux__)
     if (sequence_control_set_ptr->static_config.target_socket != -1)
         core_count /= num_groups;
+#endif
     if (sequence_control_set_ptr->static_config.logical_processors != 0)
         core_count = sequence_control_set_ptr->static_config.logical_processors < core_count ?
             sequence_control_set_ptr->static_config.logical_processors: core_count;
-#endif
 
 #ifdef _WIN32
     //Handle special case on Windows
@@ -910,7 +910,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     build_blk_geom(scs_init.sb_size == 128);
 
-    av1_init_me_luts();
+    eb_av1_init_me_luts();
     init_fn_ptr();
 
     /************************************
